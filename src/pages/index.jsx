@@ -1,7 +1,19 @@
 import Head from 'next/head'
+import { useEffect, useState } from 'react';
 import { Container, Footer, Layout, Navbar, Hero } from '../components';
 
 const HomePage = () => {
+  const [plans, setPlans] = useState({});
+  
+  useEffect(() => {
+      fetch('http://localhost:3000/plans')
+      .then(res => res.json())
+      .then(data => setPlans(data.data.availablePlans))
+      .catch(err => console.log(err));  
+  }, []);
+
+  console.log(plans);
+
   return (
     <Layout>
       <Head>

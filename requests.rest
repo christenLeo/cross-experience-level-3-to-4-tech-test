@@ -1,0 +1,15 @@
+POST http://localhost:3000/signplan
+Content-Type: application/json
+
+{
+    "cardNum": "213213123123",
+    "month": "",
+    "year": "23",
+    "cvv": "213",
+    "ownerName": "jadoajdiwjad"
+}
+
+###
+
+GET http://localhost:3000/plans
+Content-Type: application/json

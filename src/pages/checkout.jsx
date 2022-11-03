@@ -2,6 +2,8 @@ import Head from 'next/head'
 import { Container, Footer, Layout, Navbar, Hero } from '../components';
 
 const HomePage = () => {
+  
+
   return (
     <Layout>
       <Head>
