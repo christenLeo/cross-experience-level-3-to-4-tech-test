@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Script from 'next/script';
 import { useEffect, useState } from 'react';
 import { Container, Footer, Layout, Navbar, Hero } from '../components';
 
@@ -10,18 +11,13 @@ const HomePage = () => {
       .then(res => res.json())
       .then(data => setPlans(data.data.availablePlans))
       .catch(err => console.log(err));  
-  }, []);
-
-  console.log(plans);
+  },[]);
 
   return (
     <Layout>
       <Head>
         <title>Jusbrasil: Tech test (level 03 to 04)</title>
         <link rel="icon" href="/favicon.png" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.2/dist/css/uikit.min.css" />
-        <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.2/dist/js/uikit.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.2/dist/js/uikit-icons.min.js"></script>
       </Head>
 
       <Navbar />
@@ -65,16 +61,16 @@ const HomePage = () => {
         <h2 id="planos" className="uk-text-center uk-margin-bottom">Conheça nossos planos</h2>
         <div className="uk-column-1-4">
           <div className="uk-placeholder uk-margin-large-bottom uk-text-center">
-            Você deve implementar os componentes de listagem de planos.
+            
           </div>
           <div className="uk-placeholder uk-margin-large-bottom uk-text-center">
-            Você deve implementar os componentes de listagem de planos.
+            
           </div>
           <div className="uk-placeholder uk-margin-large-bottom uk-text-center">
-            Você deve implementar os componentes de listagem de planos.
+            
           </div>
           <div className="uk-placeholder uk-margin-large-bottom uk-text-center">
-            Você deve implementar os componentes de listagem de planos.
+            
           </div>
         </div>
       </Container>
@@ -100,6 +96,8 @@ const HomePage = () => {
       </Container>
 
       <Footer />
+      <Script src="https://cdn.jsdelivr.net/npm/uikit@3.15.2/dist/js/uikit.min.js"/>
+      <Script src="https://cdn.jsdelivr.net/npm/uikit@3.15.2/dist/js/uikit-icons.min.js"/>
     </Layout>
   )
 }
