@@ -2,6 +2,7 @@ const express = require('express');
 const next = require('next');
 const bodyParser = require('body-parser');
 const plans = require('./data/available-plans.json');
+const cards = require('./data/available-cards.json');
 const { v4: idGenerator } = require('uuid');
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -47,15 +48,29 @@ app.prepare().then(() => {
                 }
             }
 
-            // Check if it has balance??
+            // Check if the card is registered
+            const dbCard = cards.data.cards.filter(card => card.number === cardNum);
+
+            if (!dbCard[0]) {
+                statusCode = 401;
+                throw new Error("Card isn't registered");
+            }
+
+            if (dbCard[0].description === 'Just an expired card.') {
+                statusCode = 401;
+                throw new Error(dbCard[0].description);
+            }
+
+            if (dbCard[0].description === 'A card with no balance available.') {
+                statusCode = 401;
+                throw new Error(dbCard[0].description);
+            }
 
             // Check the month 
             if (month < 1 || month > 12) {
                 statusCode = 400;
                 throw new Error('Please check the month number');
             }
-
-            // Check the year
 
             // Check the cvv
             const cvvArr = cvv.split('');
