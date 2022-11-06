@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Script from 'next/script';
+import Router from 'next/router';
 import { useEffect, useState } from 'react';
 import { Container, Footer, Layout, Navbar, Hero } from '../components';
 import IndividualCard from '../components/individualCard';
@@ -29,6 +30,9 @@ const HomePage = () => {
 
   const goToCheckout = (planInfo) => {
     // save info into the local storage and change page logic
+    const jsonPlanInfo = JSON.stringify(planInfo)
+    localStorage.setItem('planInfo', jsonPlanInfo);
+    Router.push('/checkout')
   };
   
   // page life cycle actions

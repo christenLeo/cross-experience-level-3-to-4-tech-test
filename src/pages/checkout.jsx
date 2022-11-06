@@ -1,17 +1,24 @@
 import Head from 'next/head'
-import { Container, Footer, Layout, Navbar, Hero } from '../components';
+import Script from 'next/script';
+import { useEffect, useState } from 'react';
+import { Container, Footer, Layout, Navbar } from '../components';
 
 const HomePage = () => {
-  
+  const [planInfo, setPlanInfo] = useState({});
+
+  useEffect(() => {
+    const savedPlanInfo = localStorage.getItem('planInfo');
+    const objPlanInfo = JSON.parse(savedPlanInfo);
+    setPlanInfo(objPlanInfo);
+  }, []);
+
+  console.log(planInfo);
 
   return (
     <Layout>
       <Head>
         <title>Jusbrasil: Tech test (level 03 to 04)</title>
         <link rel="icon" href="/favicon.png" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.2/dist/css/uikit.min.css" />
-        <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.2/dist/js/uikit.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.2/dist/js/uikit-icons.min.js"></script>
       </Head>
 
       <Navbar />
@@ -22,11 +29,11 @@ const HomePage = () => {
             <div className="uk-grid uk-child-width-expand">
               <div>
                 <h2 className="uk-text-meta">Produto</h2>
-                <p>[NOME DO PLANO]</p>
+                <p>{planInfo.offerInfo !== undefined ? planInfo.offerInfo.name : "Nome do Plano"}</p>
               </div>
               <div>
                 <h2 className="uk-text-meta">Total</h2>
-                <p>[TOTAL]</p>
+                <p><span>{planInfo.paymentInfo !== undefined ? planInfo.paymentInfo.currency : "R$"} </span>{planInfo.paymentInfo !== undefined ? planInfo.paymentInfo.price : "00,00"}</p>
               </div>
             </div>
           </div>
@@ -70,6 +77,8 @@ const HomePage = () => {
       </Container>
 
       <Footer />
+      <Script src="https://cdn.jsdelivr.net/npm/uikit@3.15.2/dist/js/uikit.min.js"></Script>
+      <Script src="https://cdn.jsdelivr.net/npm/uikit@3.15.2/dist/js/uikit-icons.min.js"></Script>
     </Layout>
   )
 }
