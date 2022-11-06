@@ -2,16 +2,58 @@ import Head from 'next/head'
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
 import { Container, Footer, Layout, Navbar, Hero } from '../components';
+import IndividualCard from '../components/individualCard';
+import BundleCard from '../components/bundleCard';
 
 const HomePage = () => {
-  const [plans, setPlans] = useState({});
+  const [individuals, setIndividuals] = useState([]);
+  const [bundles, setBundles] = useState([]);
+
+  // auxiliar functions
+  const dividePlans = (plans) => {
+    const indv = [];
+    const bun = [];
+    
+    for (let i = 0; i < plans.length; i++) {
+      if (plans[i].type === 'individual') {
+        indv.push(plans[i]);
+      }
+      else if (plans[i].type === 'bundle') {
+        bun.push(plans[i])
+      }
+    }
+    
+    setIndividuals(indv);
+    setBundles(bun);
+  };
+
+  const goToCheckout = (planInfo) => {
+    // save info into the local storage and change page logic
+  };
   
+  // page life cycle actions
   useEffect(() => {
-      fetch('http://localhost:3000/plans')
-      .then(res => res.json())
-      .then(data => setPlans(data.data.availablePlans))
-      .catch(err => console.log(err));  
+    fetch('http://localhost:3000/plans')
+    .then(res => res.json())
+    .then(data => dividePlans(data.data.availablePlans))
+    .catch(err => console.log(err));
   },[]);
+
+    
+  // building components
+  const buildIndividualCards = individuals.map((plan) => {
+    return (
+      <IndividualCard key={plan.id} plan={{offerInfo: plan.offerInfo, paymentInfo: plan.paymentInfo}} goToCheckout={goToCheckout}/>
+    );
+  });
+
+  const buildBundleCards = bundles.map((plan) => {
+    return (
+      <BundleCard key={plan.id} plan={{offerInfo: plan.offerInfo, paymentInfo: plan.paymentInfo}} goToCheckout={goToCheckout}/>
+    );
+  });
+
+  console.log({individuals, bundles});
 
   return (
     <Layout>
@@ -59,19 +101,8 @@ const HomePage = () => {
 
       <Container>
         <h2 id="planos" className="uk-text-center uk-margin-bottom">Conheça nossos planos</h2>
-        <div className="uk-column-1-4">
-          <div className="uk-placeholder uk-margin-large-bottom uk-text-center">
-            
-          </div>
-          <div className="uk-placeholder uk-margin-large-bottom uk-text-center">
-            
-          </div>
-          <div className="uk-placeholder uk-margin-large-bottom uk-text-center">
-            
-          </div>
-          <div className="uk-placeholder uk-margin-large-bottom uk-text-center">
-            
-          </div>
+        <div className="uk-column-1-3">
+            {buildIndividualCards}
         </div>
       </Container>
 
@@ -82,12 +113,7 @@ const HomePage = () => {
           </div>
           <div>
             <h3>Pacotes recomendados</h3>
-            <div className="uk-placeholder">
-              <p>Você deve implementar os componentes de recomendações</p>
-            </div>
-            <div className="uk-placeholder">
-              <p>Você deve implementar os componentes de recomendações</p>
-            </div>
+            {buildBundleCards}
           </div>
         </div>
         <p className="uk-text-center uk-margin-large-bottom">
