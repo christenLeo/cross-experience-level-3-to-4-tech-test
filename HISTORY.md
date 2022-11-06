@@ -18,7 +18,8 @@ Please fill out this file with your decisions, opinions or improvements.
 ### Front-End
 - Created the src/components/individualCard/index.jsx -> component to render the Individual plans info
 - Created the src/components/bundleCard/index.jsx -> component to render the Bundle plans info
-- 
+- Installed the react-hook-form library in order to validate the inputs before send this info to the API
+- installed the axios library to make easier do the API calls
 
 ### Tests  
 - Changed the react version from React@17.0.2 to React@18.0.0 in order to install the testing library JEST

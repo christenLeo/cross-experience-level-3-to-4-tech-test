@@ -1,10 +1,12 @@
 import Head from 'next/head'
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Container, Footer, Layout, Navbar } from '../components';
 
 const HomePage = () => {
   const [planInfo, setPlanInfo] = useState({});
+  const {register, handleSubmit, formState: {errors}} = useForm();
 
   useEffect(() => {
     const savedPlanInfo = localStorage.getItem('planInfo');
@@ -12,7 +14,14 @@ const HomePage = () => {
     setPlanInfo(objPlanInfo);
   }, []);
 
-  console.log(planInfo);
+  // Auxiliar functions
+  const onSubmitForm = (data) => {
+    console.log(data);
+  };
+
+  const formatCredCard = (evt) => {
+    evt.target.value = evt.target.value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 ').trim('');
+  }
 
   return (
     <Layout>
@@ -40,26 +49,26 @@ const HomePage = () => {
           <div className="uk-grid uk-child-width-1-2@m">
             <div>
               <h3><i data-uk-icon="icon: credit-card"></i> Cartão de crédito</h3>
-              <p>Preencha abaixo todos os campos para comtinuar com a sua compra.</p>
+              <p>Preencha abaixo todos os campos para continuar com a sua compra.</p>
 
-              <form>
+              <form onSubmit={handleSubmit(onSubmitForm)}>
                 <fieldset className="uk-fieldset">
                   <div className="uk-margin">
-                    <input type="text" className="uk-input" placeholder="NUMERO DO CARTÃO" />
+                    <input type="text" className="uk-input" placeholder="NÚMERO DO CARTÃO" {...register('cardNum')} required maxLength={19} onKeyUp={formatCredCard} />
                   </div>
                   <div className="uk-grid uk-child-width-1-4" data-uk-grid>
                     <div>
-                      <input type="text" className="uk-input" placeholder="MÊS" maxLength="2" />
+                      <input type="text" className="uk-input" placeholder="MÊS" maxLength="2" {...register('month')} required/>
                     </div>
                     <div>
-                      <input type="text" className="uk-input" placeholder="ANO" maxLength="4" />
+                      <input type="text" className="uk-input" placeholder="ANO" maxLength="4" {...register('year')} required/>
                     </div>
                     <div>
-                      <input type="text" className="uk-input" placeholder="CVV" maxLength="4" />
+                      <input type="text" className="uk-input" placeholder="CVV" maxLength="4" {...register('cvv')} required/>
                     </div>
                   </div>
                   <div className="uk-margin">
-                    <input type="text" className="uk-input" placeholder="NOME IMPRESSO NO CARTÃO" />
+                    <input type="text" className="uk-input" placeholder="NOME IMPRESSO NO CARTÃO" {...register('ownerName')} required/>
                   </div>
                 </fieldset>
                 <input type="submit" value="ASSINAR AGORA!" className="uk-button uk-button-primary" />

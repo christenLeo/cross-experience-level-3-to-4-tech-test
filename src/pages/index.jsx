@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Script from 'next/script';
 import Router from 'next/router';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Container, Footer, Layout, Navbar, Hero } from '../components';
 import IndividualCard from '../components/individualCard';
@@ -29,18 +30,23 @@ const HomePage = () => {
   };
 
   const goToCheckout = (planInfo) => {
-    // save info into the local storage and change page logic
     const jsonPlanInfo = JSON.stringify(planInfo)
     localStorage.setItem('planInfo', jsonPlanInfo);
     Router.push('/checkout')
   };
   
+  const getPlans = async () =>{
+    try {
+      const {data} = await axios.get('http://localhost:3000/plans');
+      dividePlans(data.data.availablePlans);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   // page life cycle actions
   useEffect(() => {
-    fetch('http://localhost:3000/plans')
-    .then(res => res.json())
-    .then(data => dividePlans(data.data.availablePlans))
-    .catch(err => console.log(err));
+    getPlans();
   },[]);
 
     
@@ -56,8 +62,6 @@ const HomePage = () => {
       <BundleCard key={plan.id} plan={{offerInfo: plan.offerInfo, paymentInfo: plan.paymentInfo}} goToCheckout={goToCheckout}/>
     );
   });
-
-  console.log({individuals, bundles});
 
   return (
     <Layout>
