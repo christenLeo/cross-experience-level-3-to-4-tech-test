@@ -1,15 +1,74 @@
 import Head from 'next/head'
+import Script from 'next/script';
+import Router from 'next/router';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Container, Footer, Layout, Navbar, Hero } from '../components';
+import { baseUrl } from '../resources/constants/urls';
+import IndividualCard from '../components/individualCard';
+import BundleCard from '../components/bundleCard';
 
 const HomePage = () => {
+  const [individuals, setIndividuals] = useState([]);
+  const [bundles, setBundles] = useState([]);
+
+  // auxiliar functions
+  const dividePlans = (plans) => {
+    const indv = [];
+    const bun = [];
+    
+    for (let i = 0; i < plans.length; i++) {
+      if (plans[i].type === 'individual') {
+        indv.push(plans[i]);
+      }
+      else if (plans[i].type === 'bundle') {
+        bun.push(plans[i])
+      }
+    }
+    
+    setIndividuals(indv);
+    setBundles(bun);
+  };
+
+  const goToCheckout = (planInfo) => {
+    const jsonPlanInfo = JSON.stringify(planInfo)
+    localStorage.setItem('planInfo', jsonPlanInfo);
+    Router.push('/checkout')
+  };
+  
+  const getPlans = async () =>{
+    try {
+      const {data} = await axios.get(`${baseUrl}plans`);
+      dividePlans(data.data.availablePlans);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // page life cycle actions
+  useEffect(() => {
+    getPlans();
+  },[]);
+
+    
+  // building components
+  const buildIndividualCards = individuals.map((plan, i) => {
+    return (
+      <IndividualCard id={`individ${i+1}`} key={plan.id} plan={{offerInfo: plan.offerInfo, paymentInfo: plan.paymentInfo}} goToCheckout={goToCheckout}/>
+    );
+  });
+
+  const buildBundleCards = bundles.map((plan, i) => {
+    return (
+      <BundleCard id={`bundle${i+1}`} key={plan.id} plan={{offerInfo: plan.offerInfo, paymentInfo: plan.paymentInfo}} goToCheckout={goToCheckout}/>
+    );
+  });
+
   return (
     <Layout>
       <Head>
         <title>Jusbrasil: Tech test (level 03 to 04)</title>
         <link rel="icon" href="/favicon.png" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.2/dist/css/uikit.min.css" />
-        <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.2/dist/js/uikit.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.2/dist/js/uikit-icons.min.js"></script>
       </Head>
 
       <Navbar />
@@ -51,19 +110,8 @@ const HomePage = () => {
 
       <Container>
         <h2 id="planos" className="uk-text-center uk-margin-bottom">Conheça nossos planos</h2>
-        <div className="uk-column-1-4">
-          <div className="uk-placeholder uk-margin-large-bottom uk-text-center">
-            Você deve implementar os componentes de listagem de planos.
-          </div>
-          <div className="uk-placeholder uk-margin-large-bottom uk-text-center">
-            Você deve implementar os componentes de listagem de planos.
-          </div>
-          <div className="uk-placeholder uk-margin-large-bottom uk-text-center">
-            Você deve implementar os componentes de listagem de planos.
-          </div>
-          <div className="uk-placeholder uk-margin-large-bottom uk-text-center">
-            Você deve implementar os componentes de listagem de planos.
-          </div>
+        <div className="uk-column-1-3">
+            {buildIndividualCards}
         </div>
       </Container>
 
@@ -74,12 +122,7 @@ const HomePage = () => {
           </div>
           <div>
             <h3>Pacotes recomendados</h3>
-            <div className="uk-placeholder">
-              <p>Você deve implementar os componentes de recomendações</p>
-            </div>
-            <div className="uk-placeholder">
-              <p>Você deve implementar os componentes de recomendações</p>
-            </div>
+            {buildBundleCards}
           </div>
         </div>
         <p className="uk-text-center uk-margin-large-bottom">
@@ -88,6 +131,8 @@ const HomePage = () => {
       </Container>
 
       <Footer />
+      <Script src="https://cdn.jsdelivr.net/npm/uikit@3.15.2/dist/js/uikit.min.js"/>
+      <Script src="https://cdn.jsdelivr.net/npm/uikit@3.15.2/dist/js/uikit-icons.min.js"/>
     </Layout>
   )
 }
