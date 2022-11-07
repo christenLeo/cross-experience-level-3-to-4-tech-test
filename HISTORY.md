@@ -21,9 +21,10 @@ Please fill out this file with your decisions, opinions or improvements.
 - Created the src/components/bundleCard/index.jsx -> component to render the Bundle plans info
 - Installed the react-hook-form library in order to validate the inputs before send this info to the API
 - installed the axios library to make easier do the API calls
-  
 
 ### Tests  
 - Changed the react version from React@17.0.2 to React@18.0.0 in order to install the testing library JEST
 - Installed Jest and React testing library
-- 
+- Made the tests/ folder and the index.test.jsx file to do the tests of the home page
+- Added the test script in package.json
+- Created and setted up the jest.config.js and the jest.setup.js files
