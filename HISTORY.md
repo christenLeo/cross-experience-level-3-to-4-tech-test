@@ -5,6 +5,7 @@ Please fill out this file with your decisions, opinions or improvements.
 - Created server/ folder and inside it made the server.js where my endpoints are, and moved the data/ folder from the resources/ folder to the server/ folder
 - Moved the available-cards.json file from the src/resources/cards/ to the server/data/ folder
 - Created the _document.js file into the src/pages/ folder to add in it the stylesheets links to resolve a rendering bug, also used the Script tag from next/script at the bottom of the page to resolve the rendering bug as well
+- Made the src/resources/constants/urls.js to store the base url path
   
 ### Back-End  
 - Installed the Express framework to implement the API
@@ -20,6 +21,7 @@ Please fill out this file with your decisions, opinions or improvements.
 - Created the src/components/bundleCard/index.jsx -> component to render the Bundle plans info
 - Installed the react-hook-form library in order to validate the inputs before send this info to the API
 - installed the axios library to make easier do the API calls
+  
 
 ### Tests  
 - Changed the react version from React@17.0.2 to React@18.0.0 in order to install the testing library JEST

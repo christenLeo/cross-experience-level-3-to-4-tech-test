@@ -1,12 +1,17 @@
 import Head from 'next/head'
 import Script from 'next/script';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Container, Footer, Layout, Navbar } from '../components';
+import { baseUrl } from '../resources/constants/urls';
+import Router from 'next/router';
 
 const HomePage = () => {
   const [planInfo, setPlanInfo] = useState({});
-  const {register, handleSubmit, formState: {errors}} = useForm();
+  const [error, setError] = useState({});
+  const [response, setResponse] = useState({});
+  const {register, handleSubmit} = useForm();
 
   useEffect(() => {
     const savedPlanInfo = localStorage.getItem('planInfo');
@@ -15,13 +20,28 @@ const HomePage = () => {
   }, []);
 
   // Auxiliar functions
-  const onSubmitForm = (data) => {
-    console.log(data);
+  const onSubmitForm = async (data) => {
+    try {
+      const res = await axios.post(`${baseUrl}signplan`, data);
+      setResponse({status: res.status, message: res.data.message, info: res.data.info});
+
+      if (res) alert(res.data.message);
+
+      Router.push('/');
+    }
+    catch (err) {
+      setError({status: err.response.status, message: err.response.data.message});
+
+      if (err) alert(err.response.data.message);
+    }
   };
 
   const formatCredCard = (evt) => {
     evt.target.value = evt.target.value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 ').trim('');
   }
+
+  // Getting current date
+  const date = new Date();
 
   return (
     <Layout>
@@ -54,21 +74,21 @@ const HomePage = () => {
               <form onSubmit={handleSubmit(onSubmitForm)}>
                 <fieldset className="uk-fieldset">
                   <div className="uk-margin">
-                    <input type="text" className="uk-input" placeholder="NÚMERO DO CARTÃO" {...register('cardNum')} required maxLength={19} onKeyUp={formatCredCard} />
+                    <input type="text" className="uk-input" placeholder="NÚMERO DO CARTÃO" {...register('cardNum')} required maxLength={19} onChange={formatCredCard} pattern='^[\d ]*$'/>
                   </div>
                   <div className="uk-grid uk-child-width-1-4" data-uk-grid>
                     <div>
-                      <input type="text" className="uk-input" placeholder="MÊS" maxLength="2" {...register('month')} required/>
+                      <input type="number" className="uk-input" placeholder="MÊS" max={12} min={1} {...register('month')} required/>
                     </div>
                     <div>
-                      <input type="text" className="uk-input" placeholder="ANO" maxLength="4" {...register('year')} required/>
+                      <input type="number" className="uk-input" placeholder="ANO" min={date.getFullYear()} {...register('year')} required/>
                     </div>
                     <div>
-                      <input type="text" className="uk-input" placeholder="CVV" maxLength="4" {...register('cvv')} required/>
+                      <input type="text" className="uk-input" placeholder="CVV" maxLength="4" {...register('cvv')} required pattern='^[\d]*$'/>
                     </div>
                   </div>
                   <div className="uk-margin">
-                    <input type="text" className="uk-input" placeholder="NOME IMPRESSO NO CARTÃO" {...register('ownerName')} required/>
+                    <input type="text" className="uk-input" placeholder="NOME IMPRESSO NO CARTÃO" {...register('ownerName')} required pattern='^[\p{L} ]*$'/>
                   </div>
                 </fieldset>
                 <input type="submit" value="ASSINAR AGORA!" className="uk-button uk-button-primary" />

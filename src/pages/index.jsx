@@ -4,6 +4,7 @@ import Router from 'next/router';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Container, Footer, Layout, Navbar, Hero } from '../components';
+import { baseUrl } from '../resources/constants/urls';
 import IndividualCard from '../components/individualCard';
 import BundleCard from '../components/bundleCard';
 
@@ -37,7 +38,7 @@ const HomePage = () => {
   
   const getPlans = async () =>{
     try {
-      const {data} = await axios.get('http://localhost:3000/plans');
+      const {data} = await axios.get(`${baseUrl}plans`);
       dividePlans(data.data.availablePlans);
     } catch (err) {
       console.log(err);
