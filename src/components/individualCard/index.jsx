@@ -1,4 +1,4 @@
-const IndividualCard = ({plan, goToCheckout}) => {
+const IndividualCard = ({plan, goToCheckout, id}) => {
     const {offerInfo, paymentInfo} = plan;
 
     const mountBenefits = offerInfo.benefits.map((benefit) => {
@@ -8,7 +8,7 @@ const IndividualCard = ({plan, goToCheckout}) => {
     });
 
     return (
-        <div className="uk-placeholder uk-margin-large-bottom uk-text-center">
+        <div id={id} className="uk-placeholder uk-margin-large-bottom uk-text-center">
             <h3>{offerInfo.name}</h3>
             {mountBenefits}
 

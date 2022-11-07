@@ -52,15 +52,15 @@ const HomePage = () => {
 
     
   // building components
-  const buildIndividualCards = individuals.map((plan) => {
+  const buildIndividualCards = individuals.map((plan, i) => {
     return (
-      <IndividualCard key={plan.id} plan={{offerInfo: plan.offerInfo, paymentInfo: plan.paymentInfo}} goToCheckout={goToCheckout}/>
+      <IndividualCard id={`individ${i+1}`} key={plan.id} plan={{offerInfo: plan.offerInfo, paymentInfo: plan.paymentInfo}} goToCheckout={goToCheckout}/>
     );
   });
 
-  const buildBundleCards = bundles.map((plan) => {
+  const buildBundleCards = bundles.map((plan, i) => {
     return (
-      <BundleCard key={plan.id} plan={{offerInfo: plan.offerInfo, paymentInfo: plan.paymentInfo}} goToCheckout={goToCheckout}/>
+      <BundleCard id={`bundle${i+1}`} key={plan.id} plan={{offerInfo: plan.offerInfo, paymentInfo: plan.paymentInfo}} goToCheckout={goToCheckout}/>
     );
   });
 

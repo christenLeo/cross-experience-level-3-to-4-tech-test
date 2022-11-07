@@ -1,8 +1,8 @@
-const BundleCard = ({plan, goToCheckout}) => {
+const BundleCard = ({plan, goToCheckout, id}) => {
     const {offerInfo, paymentInfo} = plan;
 
     return (
-        <div className="uk-placeholder">
+        <div id={id} className="uk-placeholder">
             <h3>{offerInfo.name}</h3>
 
             <p><span>{paymentInfo.currency}</span>{paymentInfo.price}<span>/mês</span></p>
