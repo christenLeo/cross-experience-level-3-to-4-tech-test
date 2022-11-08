@@ -8,10 +8,4 @@ describe('Home Page', () => {
 
         expect(home.container).toBeInTheDocument();
     });
-    it('Title render succesfully', () => {
-        render(<HomePage />);
-        const title = screen.getByText('Informação jurídica.');
-
-        expect(title).toBeInTheDocument();
-    }); 
 });
