@@ -18,6 +18,8 @@ You can use the endpoint "**GET**Plans" to see which plans are available, and se
     4. Then, $ docker compose up;
     5. In your web browser, go to http://localhost:3000/;  
 
+## 💻 How to test
+    1. In your terminal execute: $ npm run test;
 
 ## 🚀 Stack
 
