@@ -1,0 +1,85 @@
+body{
+    overflow-x: hidden;
+}
+
+.bundle-container{
+    background-color: rgba(103, 142, 248, 0.156);
+    width: 100%;
+    margin-left: -10%;
+    padding: 3rem 8rem;
+    position: relative;
+}
+
+.bundle-cards-wrapper{
+    position: absolute;
+    top: 0;
+    right: 6rem;
+    
+}
+
+.bundle-cards-wrapper>h3{
+    text-align: center;
+    padding-top: 1.4rem;
+}
+
+.bundle-card{
+    margin: 0;
+    width: 500px;
+    height: 140px;
+    border: none;
+    background-color: white;
+}
+
+.bundle-cards-wrapper::after{
+    content: "";
+    height: 1px;
+    width: 400px;
+    background-color: lightgray;
+    position: absolute;
+    top: 18rem;
+    right: 5.25rem;
+    z-index: 1;
+}
+
+.bundle-card_card-content{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.card-content_price-info{
+    color: black;
+    font-weight: 500;
+    font-size: 1.25rem;
+}
+
+.card-content_price-info>span{
+    font-weight: 400;
+    color: rgb(109, 108, 108);
+    font-size: 1rem;
+}
+
+.button{
+    background-color: rgb(54, 143, 252);
+    border-radius: 5px;
+    color: white;
+}
+
+.individual-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 450px;
+}
+
+.individual-card-benefits{
+    text-align: left;
+}
+
+.individual-card-benefits>span{
+    margin-right: 1rem;
+}
+
+.button-indv{
+    width: 230px;
+}

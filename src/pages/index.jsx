@@ -54,13 +54,13 @@ const HomePage = () => {
   // building components
   const buildIndividualCards = individuals.map((plan, i) => {
     return (
-      <IndividualCard id={`individ${i+1}`} key={plan.id} plan={{offerInfo: plan.offerInfo, paymentInfo: plan.paymentInfo}} goToCheckout={goToCheckout}/>
+      <IndividualCard key={plan.id} plan={{offerInfo: plan.offerInfo, paymentInfo: plan.paymentInfo}} goToCheckout={goToCheckout}/>
     );
   });
 
   const buildBundleCards = bundles.map((plan, i) => {
     return (
-      <BundleCard id={`bundle${i+1}`} key={plan.id} plan={{offerInfo: plan.offerInfo, paymentInfo: plan.paymentInfo}} goToCheckout={goToCheckout}/>
+      <BundleCard key={plan.id} plan={{offerInfo: plan.offerInfo, paymentInfo: plan.paymentInfo}} goToCheckout={goToCheckout}/>
     );
   });
 
@@ -116,11 +116,11 @@ const HomePage = () => {
       </Container>
 
       <Container>
-        <div className="uk-column-1-2">
+        <div className="uk-column-1-2 bundle-container">
           <div>
             <img src="https://static.jusbr.com/deadpool/pro/image/recommended_plan_offer@2x.png" style={{ maxHeight: 400, marginBottom: 32 }} />
           </div>
-          <div>
+          <div className='bundle-cards-wrapper'>
             <h3>Pacotes recomendados</h3>
             {buildBundleCards}
           </div>
