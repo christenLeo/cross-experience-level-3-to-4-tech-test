@@ -1,7 +1,9 @@
 import dataBasePlansInfo from "../server/data/available-plans.json";
 import dataBaseCardsInfo from "../server/data/available-cards.json";
 import { v4 as idGenerator } from 'uuid';
-
+import { render } from '@testing-library/react';
+import HomePage from '../src/pages/index.jsx';
+import '@testing-library/jest-dom';
 
 const getPlansMock = () => {
     return dataBasePlansInfo.data.availablePlans;
@@ -73,7 +75,15 @@ const postSignPlanMock = (body) => {
     };
 
     return {message: 'Plan signed successfully', info: newPlanSign};
-};    
+};  
+
+describe('Home Page', () => {
+    it('The page render successfully', () => {
+        const home = render(<HomePage />);
+
+        expect(home.container).toBeInTheDocument();
+    });
+});
 
 describe('GET Plans', () => {
     it ('it return the plans', () => {

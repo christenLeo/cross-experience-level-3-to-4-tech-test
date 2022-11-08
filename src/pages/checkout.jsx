@@ -47,7 +47,6 @@ const HomePage = () => {
     <Layout>
       <Head>
         <title>Jusbrasil: Tech test (level 03 to 04)</title>
-        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <Navbar />

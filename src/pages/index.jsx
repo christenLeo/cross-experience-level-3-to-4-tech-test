@@ -7,7 +7,6 @@ import { Container, Footer, Layout, Navbar, Hero } from '../components';
 import { baseUrl } from '../resources/constants/urls';
 import IndividualCard from '../components/individualCard';
 import BundleCard from '../components/bundleCard';
-import icon from '../../public/favicon.png';
 
 const HomePage = () => {
   const [individuals, setIndividuals] = useState([]);
@@ -69,7 +68,6 @@ const HomePage = () => {
     <Layout>
       <Head>
         <title>Jusbrasil: Tech test (level 03 to 04)</title>
-        <link rel="icon" href={icon} />
       </Head>
 
       <Navbar />
